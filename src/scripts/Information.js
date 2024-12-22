@@ -31,6 +31,7 @@ const artikelContent = [
     }
 ];
 
+
 const informasiContent = [
     { title: "Jam Operasional", icon: "fas fa-clock", detail: "07:00 - 16:00" },
     { title: "Alamat", icon: "fas fa-map-marker-alt", detail: "Jl. Pendidikan No.12, Jakarta" },
@@ -38,13 +39,7 @@ const informasiContent = [
     { title: "Email", icon: "fas fa-envelope", detail: "info@sekolah.id" }
 ];
 
-const piketContent = [
-    { day: "Senin", names: ["Ahmad", "Budi"], task: "Menyapu dan Menghapus Papan Tulis" },
-    { day: "Selasa", names: ["Citra", "Dini"], task: "Mengambil Absen dan Membersihkan Meja Guru" },
-    { day: "Rabu", names: ["Eka", "Fadli"], task: "Merapikan Buku di Perpustakaan" },
-    { day: "Kamis", names: ["Gita", "Hadi"], task: "Membersihkan Jendela dan Papan Tulis" },
-    { day: "Jumat", names: ["Ika", "Joko"], task: "Membersihkan Area Luar Ruang Kelas" }
-];
+
 
 const mapelExcel = "link_to_your_excel_file.xlsx";
 
@@ -76,18 +71,48 @@ informasiContent.forEach(item => {
                 `;
     informasiContainer.appendChild(info);
 });
+// Data Jadwal Piket
+const piketContent = [
+    { day: "Senin", duties: [{ name: "Ahmad", task: "Menyapu" }, { name: "Budi", task: "Menghapus Papan Tulis" }] },
+    { day: "Selasa", duties: [{ name: "Citra", task: "Mengambil Absen" }, { name: "Dini", task: "Membersihkan Meja Guru" }] },
+    { day: "Rabu", duties: [{ name: "Eka", task: "Merapikan Buku di Perpustakaan" }, { name: "Fadli", task: "Mengelap Meja" }] },
+    { day: "Kamis", duties: [{ name: "Gita", task: "Membersihkan Jendela" }, { name: "Hadi", task: "Menyapu Halaman" }] },
+    { day: "Jumat", duties: [{ name: "Ika", task: "Menghapus Papan Tulis" }, { name: "Joko", task: "Membersihkan Area Luar Kelas" }] },
+];
 
 // Render Piket Content
 const piketContainer = document.getElementById('piket-content');
+
+// Fungsi untuk membuat grup berdasarkan hari
 piketContent.forEach(item => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-                    <td class="py-2 px-3">${item.day}</td>
-                    <td class="py-2 px-3">${item.names.join(", ")}</td>
-                    <td class="py-2 px-3">${item.task}</td>
-                `;
-    piketContainer.appendChild(row);
+    // Container untuk tiap hari
+    const dayGroup = document.createElement('div');
+    dayGroup.classList.add("p-4", "bg-white", "rounded", "shadow");
+
+    // Header hari
+    const dayHeader = document.createElement('h4');
+    dayHeader.classList.add("text-lg", "font-bold", "text-gray-800", "mb-2");
+    dayHeader.textContent = item.day;
+
+    // Daftar tugas
+    const dutyList = document.createElement('ul');
+    dutyList.classList.add("list-disc", "ml-5", "space-y-1");
+
+    // Menambahkan tugas ke dalam daftar
+    item.duties.forEach(duty => {
+        const dutyItem = document.createElement('li');
+        dutyItem.textContent = `${duty.name} - ${duty.task}`;
+        dutyList.appendChild(dutyItem);
+    });
+
+    // Menggabungkan elemen ke grup hari
+    dayGroup.appendChild(dayHeader);
+    dayGroup.appendChild(dutyList);
+
+    // Menambahkan grup hari ke kontainer utama
+    piketContainer.appendChild(dayGroup);
 });
+
 
 // Set Excel Link
 document.getElementById('excel-link').href = mapelExcel;
