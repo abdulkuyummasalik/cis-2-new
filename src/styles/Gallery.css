@@ -1,0 +1,23 @@
+.fixed.inset-0 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    animation: fade-in 0.3s ease-in-out;
+}
+
+.fixed.inset-0 img {
+    max-height: 80vh;
+    max-width: 90%;
+    border-radius: 0.5rem;
+    animation: zoom-in 0.3s ease-in-out;
+}
+
+@keyframes zoom-in {
+    from {
+        transform: scale(0.8);
+    }
+    to {
+        transform: scale(1);
+    }
+}
